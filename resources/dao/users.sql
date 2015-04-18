@@ -3,4 +3,4 @@
 INSERT INTO users
 (email_address, password)
 VALUES
-(:email-address, :password)
+(:email_address, :password)

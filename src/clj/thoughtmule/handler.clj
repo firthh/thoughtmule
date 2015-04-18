@@ -11,22 +11,23 @@
             [ragtime.sql.files :as files]
             [ragtime.core :as rt]
             [yesql.core :refer [defqueries]]
-            [clojure.data.json :as json]))
+            [clojure.data.json :as json]
+            [buddy.hashers :as hashers]))
 
 (def db-url "jdbc:postgresql://localhost/thoughtmule")
+(def db-spec {:classname "org.postgresql.Driver"
+              :subprotocol "postgresql"
+              :subname "//localhost:5432/thoughtmule"})
 
 (defqueries "dao/users.sql")
 
 (defn register [user]
-  (println user))
+  (insert-user! db-spec (:email user) (hashers/encrypt (:password user))))
 
 (defroutes routes
-  (GET "/test" [] (response/content-type
-                   (response/response "{'test': 'hello'}")
-                   "application/json"))
   (POST "/register" req (do
                           (register (:body req))
-                          (response/response "hello")))
+                          (response/response "success")))
   (GET "/" [] (render-file "templates/index.html" {:dev (env :dev?)}))
 
   (resources "/")

@@ -19,6 +19,7 @@
                  [org.clojure/data.json "0.2.6"]
                  [com.fasterxml.jackson.dataformat/jackson-dataformat-cbor "2.4.0"]
                  [ring/ring-json "0.3.1"]
+                 [buddy "0.5.1"]
                  [yesql "0.4.0"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
                  [ragtime "0.3.8"]
