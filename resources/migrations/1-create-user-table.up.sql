@@ -1,5 +1,5 @@
 CREATE TABLE users(
 id SERIAL PRIMARY KEY,
-email_address VARCHAR(255),
+email_address VARCHAR(255) UNIQUE,
 password VARCHAR(255)
 );
