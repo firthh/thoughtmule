@@ -20,6 +20,7 @@
                  [com.fasterxml.jackson.dataformat/jackson-dataformat-cbor "2.4.0"]
                  [ring/ring-json "0.3.1"]
                  [buddy "0.5.1"]
+                 [com.novemberain/validateur "2.4.2"]
                  [yesql "0.4.0"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
                  [ragtime "0.3.8"]

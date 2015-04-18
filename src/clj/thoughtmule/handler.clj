@@ -12,22 +12,30 @@
             [ragtime.core :as rt]
             [yesql.core :refer [defqueries]]
             [clojure.data.json :as json]
-            [buddy.hashers :as hashers]))
+            [buddy.hashers :as hashers]
+            [validateur.validation :refer :all]))
 
 (def db-url "jdbc:postgresql://localhost/thoughtmule")
-(def db-spec {:classname "org.postgresql.Driver"
-              :subprotocol "postgresql"
-              :subname "//localhost:5432/thoughtmule"})
 
 (defqueries "dao/users.sql")
 
+(def User (validation-set
+           (format-of :email
+                      :format #"^.*@.*$"
+                      :message "Must be a valid email address")
+           (length-of :password :within (range 6 100))
+           (presence-of :confirm-password)))
+
+
 (defn register [user]
-  (insert-user! db-spec (:email user) (hashers/encrypt (:password user))))
+  (if (or (invalid? User user) (not (= (:password user) (:confirm-password user))))
+    (response/response "not a valid user")
+    (do (insert-user! db-url (:email user) (hashers/encrypt (:password user)))
+        (response/response "success"))))
 
 (defroutes routes
-  (POST "/register" req (do
-                          (register (:body req))
-                          (response/response "success")))
+  (POST "/register" req
+        (register (:body req)))
   (GET "/" [] (render-file "templates/index.html" {:dev (env :dev?)}))
 
   (resources "/")
