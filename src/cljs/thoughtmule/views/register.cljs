@@ -1,4 +1,4 @@
-(ns thoughtmule.views.regiser
+(ns thoughtmule.views.register
   (:require [reagent.core :as reagent :refer [atom]]
             [reagent.session :as session]
             [secretary.core :as secretary :include-macros true]
@@ -36,34 +36,29 @@
                        :handler handler
                        :error-handler error-handler})))
 
-(defn validate-user [user validation-errors]
-  (reset! validation-errors (User user))
-  user)
-
-(defn register-user [validation-errors email-address password confirm-password]
-  (-> (user email-address password confirm-password)
-      (validate-user validation-errors)
-      send-request))
-
 (defn error-message [errors]
   (if errors
     [:div {:class "error"} (map (fn [e] [:span e ", "]) errors)]))
 
+(defn atom-input [value key type]
+  [:input {:type type
+           :value (key @value)
+           :on-change #(swap! value assoc key (.-target.value %))}])
+
 (defn register-form []
-  (let [email-address (atom "")
-        password (atom "")
-        confirm-password (atom "")
+  (let [form (atom {})
         validation-errors (atom {})]
     (fn []
+      (add-watch form :validation (fn [key at old new] (reset! validation-errors (User new))))
       [:div {:id "regiseter-form"}
-       [:div [:label "Email address"] [c/atom-input email-address "text"]]
+       [:div [:label "Email address"] [atom-input form :email "text"]]
        [error-message (:email @validation-errors)]
-       [:div [:label "Password"] [c/atom-input password "password"]]
+       [:div [:label "Password"] [atom-input form :password "password"]]
        [error-message (:password @validation-errors)]
-       [:div [:label "Confirm Password"] [c/atom-input confirm-password "password"]]
+       [:div [:label "Confirm Password"] [atom-input form :confirm-password "password"]]
        [error-message (:confirm-password @validation-errors)]
        [:input {:type "button" :value "Register"
-                :on-click #(register-user validation-errors @email-address @password @confirm-password)}]])))
+                :on-click #(send-request @form)}]])))
 
 (defn register-page []
   [:div [:h2 "Register"]

@@ -7,7 +7,7 @@
             [cljsjs.react :as react]
             [ajax.core :refer [GET POST]]
             [thoughtmule.views.home :as home]
-            [thoughtmule.views.regiser :as register])
+            [thoughtmule.views.register :as register])
   (:import goog.History))
 
 ;; -------------------------
