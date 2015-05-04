@@ -10,28 +10,30 @@
             [clojure.data.json :as json]
             [ragtime.sql.files :as files]
             [ragtime.core :as rt]
-            [yesql.core :refer [defqueries]]
             [clojure.data.json :as json]
             [buddy.hashers :as hashers]
+            [thoughtmule.db :as db]
+            [thoughtmule.users :as users]
             [validateur.validation :refer :all]))
 
 (def db-url "jdbc:postgresql://localhost/thoughtmule")
 
-(defqueries "dao/users.sql")
+(defn success [body]
+  (response/content-type (response/response body) "application/json"))
 
-(def User (validation-set
-           (format-of :email
-                      :format #"^.*@thoughtworks.com$"
-                      :message "Must be a valid email address")
-           (length-of :password :within (range 6 100))
-           (presence-of :confirm-password)))
+(defn invalid [body]
+  (response/content-type (response/status (response/response body) 400) "application/json"))
 
+(defn exists? [email-address]
+  (:exist (first (db/user-exists? db-url email-address))))
 
 (defn register [user]
-  (if (or (invalid? User user) (not (= (:password user) (:confirm-password user))))
-    (response/response "not a valid user")
-    (do (insert-user! db-url (:email user) (hashers/encrypt (:password user)))
-        (response/response "success"))))
+  (if (or (invalid? users/User user) (not (= (:password user) (:confirm-password user))))
+    (invalid {:message "not a valid user"})
+    (if (exists? (:email user))
+      (invalid {:message "user already exists"})
+      (do (db/insert-user! db-url (:email user) (hashers/encrypt (:password user)))
+          (success {:message "success"})))))
 
 (defroutes routes
   (POST "/register" req
@@ -50,5 +52,5 @@
   (let [handler (-> routes
                     (wrap-defaults api-defaults)
                     (wrap-json-body {:keywords? true :bigdecimals? true})
-                    )]
+                    wrap-json-response)]
     (if (env :dev?) (wrap-exceptions handler) handler)))

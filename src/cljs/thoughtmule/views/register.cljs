@@ -9,6 +9,8 @@
             [thoughtmule.views.common :as c]
             [validateur.validation :as v :include-macros true]))
 
+(def error (atom ""))
+
 (defn- attributes-equal
   [attribute1 attribute2]
   (fn [m]
@@ -36,10 +38,11 @@
            ))
 
 (defn handler [response]
-  (.log js/console (str response)))
+  (.log js/console (str response))
+  (.log js/console (secretary/dispatch! "/")))
 
-(defn error-handler [{:keys [status status-text]}]
-  (.log js/console (str "something bad happened: " status " " status-text)))
+(defn error-handler [{:keys [status status-text]} response]
+  (.log js/console (str "something bad happened: " status " " status-text ". " response)))
 
 (defn user [email-address password confirm-password]
   {:email email-address
