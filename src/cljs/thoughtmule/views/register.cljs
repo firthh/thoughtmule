@@ -39,10 +39,14 @@
 
 (defn handler [response]
   (.log js/console (str response))
-  (.log js/console (secretary/dispatch! "/")))
+  (.log js/console (secretary/dispatch! "/"))
+  (session/put! :message {:message "User successfully registered"
+                          :class "success"}))
 
-(defn error-handler [{:keys [status status-text]} response]
-  (.log js/console (str "something bad happened: " status " " status-text ". " response)))
+(defn error-handler [response]
+  (.log js/console (str "something bad happened: " (:status response) " " (:status-text response) ". " response))
+  (session/put! :message {:message (:message (:response response))
+                          :class "error"}))
 
 (defn user [email-address password confirm-password]
   {:email email-address

@@ -13,8 +13,13 @@
 ;; -------------------------
 ;; Views
 
+(defn message-component [message]
+  [:div {:class (:class message)} (:message message)])
+
 (defn current-page []
-  [:div [(session/get :current-page)]])
+  [:div
+   [:div (message-component (session/get :message))]
+   [:div [(session/get :current-page)]]])
 
 ;; -------------------------
 ;; Routes
