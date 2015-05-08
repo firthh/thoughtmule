@@ -57,5 +57,5 @@
         (let [token (hashers/encrypt (str (clj-time.core/now)))]
           (db/add-user-token! db-url token (:id db-user))
           (success {:token token}))
-        ()
+        (unauthorized)
         ))))

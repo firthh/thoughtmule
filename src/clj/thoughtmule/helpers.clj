@@ -8,5 +8,5 @@
 (defn invalid [body]
   (response/content-type (response/status (response/response body) 400) "application/json"))
 
-(defn Unauthorized []
+(defn unauthorized []
   (response/content-type (response/status (response/response {}) 403) "application/json"))
