@@ -26,6 +26,8 @@
 (defroutes routes
   (POST "/register" req
         (.register @users (:body req)))
+  (POST "/login" req
+        (.login @users (:body req)))
   (GET "/" [] (render-file "templates/index.html" {:dev (env :dev?)}))
 
   (resources "/")

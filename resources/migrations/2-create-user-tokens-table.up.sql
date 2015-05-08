@@ -1,0 +1,6 @@
+CREATE TABLE user_tokens(
+id SERIAL PRIMARY KEY,
+token VARCHAR(255),
+last_access TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+user_id int REFERENCES users(id)
+);

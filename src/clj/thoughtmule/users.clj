@@ -3,7 +3,8 @@
             [thoughtmule.db :as db]
             [thoughtmule.helpers :refer :all]
             [ring.util.response :as response]
-            [buddy.hashers :as hashers]))
+            [buddy.hashers :as hashers]
+            [buddy.core.nonce :as nonce]))
 
 (defn- attributes-equal
   [attribute1 attribute2]
@@ -33,16 +34,28 @@
 
 (defprotocol UserProtocol
   (exists? [this email-address])
-  (register [this user]))
+  (register [this user])
+  (login [this user]))
 
 (defrecord Users [db-url]
   UserProtocol
   (exists? [_ email-address]
     (:exist (first (db/user-exists? db-url email-address))))
+
   (register [this user]
     (if (invalid? user-validation user)
       (invalid {:message "not a valid user"})
       (if (.exists? this (:email user))
         (invalid {:message "user already exists"})
         (do (db/insert-user! db-url (:email user) (hashers/encrypt (:password user)))
-            (success {:message "success"}))))))
+            (success {:message "success"})))))
+
+  (login [this user]
+    (let [db-user (first (db/get-user db-url (:email user)))]
+      (println db-user)
+      (if (hashers/check (:password user) (:password db-user))
+        (let [token (hashers/encrypt (str (clj-time.core/now)))]
+          (db/add-user-token! db-url token (:id db-user))
+          (success {:token token}))
+        ()
+        ))))
