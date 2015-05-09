@@ -35,7 +35,8 @@
 (defprotocol UserProtocol
   (exists? [this email-address])
   (register [this user])
-  (login [this user]))
+  (login [this user])
+  (authenticate [this token]))
 
 (defrecord Users [db-url]
   UserProtocol
@@ -47,15 +48,15 @@
       (invalid {:message "not a valid user"})
       (if (.exists? this (:email user))
         (invalid {:message "user already exists"})
-        (do (db/insert-user! db-url (:email user) (hashers/encrypt (:password user)))
+        (do (db/insert-user<! db-url (:email user) (hashers/encrypt (:password user)))
             (success {:message "success"})))))
 
   (login [this user]
     (let [db-user (first (db/get-user db-url (:email user)))]
-      (println db-user)
       (if (hashers/check (:password user) (:password db-user))
         (let [token (hashers/encrypt (str (clj-time.core/now)))]
           (db/add-user-token! db-url token (:id db-user))
           (success {:token token}))
-        (unauthorized)
-        ))))
+        (unauthorized))))
+  (authenticate [this token]
+    (first (db/get-authorised-user db-url token))))

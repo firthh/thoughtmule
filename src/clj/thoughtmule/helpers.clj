@@ -9,4 +9,4 @@
   (response/content-type (response/status (response/response body) 400) "application/json"))
 
 (defn unauthorized []
-  (response/content-type (response/status (response/response {}) 403) "application/json"))
+  (response/content-type (response/status (response/response {}) 401) "application/json"))
