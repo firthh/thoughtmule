@@ -33,7 +33,8 @@
   :plugins [[lein-cljsbuild "1.0.4"]
             [lein-environ "1.0.0"]
             [lein-ring "0.9.1"]
-            [lein-asset-minifier "0.2.2"]]
+            [lein-asset-minifier "0.2.2"]
+            [lein-midje "3.1.3"]]
 
   :ring {:handler thoughtmule.handler/app
          :init thoughtmule.handler/init
@@ -68,7 +69,8 @@
                                   [weasel "0.6.0"]
                                   [com.cemerick/piggieback "0.2.0"]
                                   [org.clojure/tools.nrepl "0.2.10"]
-                                  [pjstadig/humane-test-output "0.7.0"]]
+                                  [pjstadig/humane-test-output "0.7.0"]
+                                  [midje "1.6.3"]]
 
                    :source-paths ["env/dev/clj"]
                    :plugins [[lein-figwheel "0.2.5"]]

@@ -54,7 +54,7 @@
   (login [this user]
     (let [db-user (first (db/get-user db-url (:email user)))]
       (if (hashers/check (:password user) (:password db-user))
-        (let [token (hashers/encrypt (str (clj-time.core/now)))]
+        (let [token (str (java.util.UUID/randomUUID))]
           (db/add-user-token! db-url token (:id db-user))
           (success {:token token}))
         (unauthorized))))
