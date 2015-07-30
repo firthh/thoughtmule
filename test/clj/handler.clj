@@ -1,7 +1,7 @@
 (ns clj.handler
   (:use midje.sweet)
-  (:require [thoughtmule.handler :refer :all]
-            [thoughtmule.db :as db]
+  (:require [travelmule.handler :refer :all]
+            [travelmule.db :as db]
             [ring.mock.request :as mock]
             [ragtime.sql.files :as files]
             [ragtime.core :as rt]
@@ -22,4 +22,3 @@
                       (app (mock/header (mock/request :get "/requests") "authorization" "Token token")) => {:status  200
                                                                                                             :headers {"Content-Type" "application/json"}
                                                                                                             :body    "{}"}))
-

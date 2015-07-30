@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/thoughtmule.jar clojure.main -m thoughtmule.server
+web: java $JVM_OPTS -cp target/travelmule.jar clojure.main -m travelmule.server

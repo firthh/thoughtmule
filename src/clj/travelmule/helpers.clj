@@ -1,4 +1,4 @@
-(ns thoughtmule.helpers
+(ns travelmule.helpers
   (:require [ring.util.response :as response]))
 
 

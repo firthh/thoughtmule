@@ -1,4 +1,4 @@
-(ns thoughtmule.core
+(ns travelmule.core
   (:require [reagent.core :as reagent :refer [atom]]
             [reagent.session :as session]
             [secretary.core :as secretary :include-macros true]
@@ -6,8 +6,8 @@
             [goog.history.EventType :as EventType]
             [cljsjs.react :as react]
             [ajax.core :refer [GET POST]]
-            [thoughtmule.views.home :as home]
-            [thoughtmule.views.register :as register])
+            [travelmule.views.home :as home]
+            [travelmule.views.register :as register])
   (:import goog.History))
 
 ;; -------------------------

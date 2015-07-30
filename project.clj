@@ -1,4 +1,4 @@
-(defproject thoughtmule "0.1.0-SNAPSHOT"
+(defproject travelmule "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -36,15 +36,15 @@
             [lein-asset-minifier "0.2.2"]
             [lein-midje "3.1.3"]]
 
-  :ring {:handler thoughtmule.handler/app
-         :init thoughtmule.handler/init
-         :uberwar-name "thoughtmule.war"}
+  :ring {:handler travelmule.handler/app
+         :init travelmule.handler/init
+         :uberwar-name "travelmule.war"}
 
   :min-lein-version "2.5.0"
 
-  :uberjar-name "thoughtmule.jar"
+  :uberjar-name "travelmule.jar"
 
-  :main thoughtmule.server
+  :main travelmule.server
 
   :clean-targets ^{:protect false} ["resources/public/js"]
 
@@ -59,7 +59,7 @@
                                         :optimizations :none
                                         :pretty-print  true}}}}
 
-  :profiles {:dev {:repl-options {:init-ns thoughtmule.repl
+  :profiles {:dev {:repl-options {:init-ns travelmule.repl
                                   :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
                    :dependencies [[ring-mock "0.1.5"]
@@ -81,12 +81,12 @@
                    :figwheel {:http-server-root "public"
                               :server-port 3449
                               :css-dirs ["resources/public/css"]
-                              :ring-handler thoughtmule.handler/app}
+                              :ring-handler travelmule.handler/app}
 
                    :env {:dev? true}
 
                    :cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]
-                                              :compiler {:main "thoughtmule.dev"
+                                              :compiler {:main "travelmule.dev"
                                                          :source-map true}}
                                         }
                                }}

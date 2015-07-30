@@ -1,5 +1,5 @@
-(ns thoughtmule.prod
-  (:require [thoughtmule.core :as core]))
+(ns travelmule.prod
+  (:require [travelmule.core :as core]))
 
 ;;ignore println statements in prod
 (set! *print-fn* (fn [& _]))

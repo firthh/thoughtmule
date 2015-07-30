@@ -1,6 +1,6 @@
-(ns thoughtmule.repl
-  (:use thoughtmule.handler
-        thoughtmule.dev
+(ns travelmule.repl
+  (:use travelmule.handler
+        travelmule.dev
         ring.server.standalone
         [ring.middleware file-info file]))
 

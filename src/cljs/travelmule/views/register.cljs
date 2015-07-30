@@ -1,4 +1,4 @@
-(ns thoughtmule.views.register
+(ns travelmule.views.register
   (:require [reagent.core :as reagent :refer [atom]]
             [reagent.session :as session]
             [secretary.core :as secretary :include-macros true]
@@ -6,7 +6,7 @@
             [goog.history.EventType :as EventType]
             [cljsjs.react :as react]
             [ajax.core :refer [GET POST]]
-            [thoughtmule.views.common :as c]
+            [travelmule.views.common :as c]
             [validateur.validation :as v :include-macros true]))
 
 (def error (atom ""))

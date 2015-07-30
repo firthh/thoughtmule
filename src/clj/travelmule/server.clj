@@ -1,5 +1,5 @@
-(ns thoughtmule.server
-  (:require [thoughtmule.handler :refer [app]]
+(ns travelmule.server
+  (:require [travelmule.handler :refer [app]]
             [ring.adapter.jetty :refer [run-jetty]])
   (:gen-class))
 

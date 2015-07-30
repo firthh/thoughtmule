@@ -1,7 +1,7 @@
-(ns thoughtmule.users
+(ns travelmule.users
   (:require [validateur.validation :refer :all]
-            [thoughtmule.db :as db]
-            [thoughtmule.helpers :refer :all]
+            [travelmule.db :as db]
+            [travelmule.helpers :refer :all]
             [ring.util.response :as response]
             [buddy.hashers :as hashers]
             [buddy.core.nonce :as nonce]))

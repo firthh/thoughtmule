@@ -1,4 +1,4 @@
-(ns thoughtmule.views.home
+(ns travelmule.views.home
   (:require [reagent.core :as reagent :refer [atom]]
             [reagent.session :as session]
             [secretary.core :as secretary :include-macros true]
@@ -6,7 +6,7 @@
             [goog.history.EventType :as EventType]
             [cljsjs.react :as react]
             [ajax.core :refer [GET POST]]
-            [thoughtmule.views.common :as c]))
+            [travelmule.views.common :as c]))
 
 (defn- sign-in-form []
   (let [email-address (atom "")
@@ -19,7 +19,7 @@
                 :on-click #(println "test")}]])))
 
 (defn home-page []
-  [:div [:h2 "Welcome to thoughtmule"]
+  [:div [:h2 "Welcome to Travel Mule"]
    [:div "Sign In"
     [sign-in-form]]
    [:div [:a {:href "#/register"} "Register"]]])

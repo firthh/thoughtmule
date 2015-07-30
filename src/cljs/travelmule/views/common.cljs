@@ -1,4 +1,4 @@
-(ns thoughtmule.views.common
+(ns travelmule.views.common
   (:require [reagent.core :as reagent :refer [atom]]))
 
 (defn atom-input [value type]

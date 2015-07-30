@@ -1,4 +1,4 @@
-(ns thoughtmule.handler
+(ns travelmule.handler
   (:use [ring.middleware.json :only [wrap-json-response wrap-json-body]])
   (:require [compojure.core :refer [GET POST defroutes]]
             [compojure.route :refer [not-found resources]]
@@ -14,10 +14,10 @@
             [ragtime.sql.files :as files]
             [ragtime.core :as rt]
             [clojure.data.json :as json]
-            [thoughtmule.users :refer :all]
-            [thoughtmule.helpers :refer :all]))
+            [travelmule.users :refer :all]
+            [travelmule.helpers :refer :all]))
 
-(def db-url "jdbc:postgresql://localhost/thoughtmule")
+(def db-url "jdbc:postgresql://localhost/travelmule?user=postgres")
 
 (def users (->Users db-url))
 
@@ -38,8 +38,7 @@
         (.login users (:body req)))
   (GET "/" [] (render-file "templates/index.html" {:dev (env :dev?)}))
 
-  (resources "/")
-  (not-found "Not Found"))
+  (resources "/"))
 
 (defn wrap-auth [handler]
   (fn [req]
@@ -51,8 +50,9 @@
   (GET "/requests" req (success {})))
 
 (defroutes routes
+  public-routes
   (-> secure-routes wrap-auth)
-  public-routes)
+  (not-found "Not Found"))
 
 (def app
   (let [handler (-> routes

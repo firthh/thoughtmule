@@ -1,5 +1,5 @@
-(ns ^:figwheel-no-load thoughtmule.dev
-  (:require [thoughtmule.core :as core]
+(ns ^:figwheel-no-load travelmule.dev
+  (:require [travelmule.core :as core]
             [figwheel.client :as figwheel :include-macros true]
             [weasel.repl :as weasel]
             [reagent.core :as r]))
