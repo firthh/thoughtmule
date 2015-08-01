@@ -1,5 +1,7 @@
 (ns validations.users
-  (:require [validateur.validation :refer :all]))
+  (:require
+   #?(:cljs [validateur.validation :refer :all :include-macros true]
+      :clj  [validateur.validation :refer :all])))
 
 (defn- attributes-equal
   [attribute1 attribute2]
@@ -29,3 +31,5 @@
 
 (defn invalid-user? [user]
   (valid? user-validation user))
+
+(def valid-user? (complement invalid-user?))
