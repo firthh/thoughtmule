@@ -11,7 +11,7 @@
             [environ.core :refer [env]]
             [ring.util.response :as response]
             [clojure.data.json :as json]
-            [ragtime.sql.files :as files]
+            [ragtime.jdbc :as rjdbc]
             [ragtime.core :as rt]
             [clojure.data.json :as json]
             [travelmule.users :refer :all]
@@ -27,9 +27,9 @@
 (def auth-backend (token-backend {:authfn authenticate-token}))
 
 (defn init []
-  (let [conn (rt/connection db-url)
-        migrations (files/migrations "resources/migrations")]
-    (println (rt/migrate-all conn migrations))))
+  (let [conn (rjdbc/sql-database db-url)
+        migrations (rjdbc/load-resources "migrations")]
+    (println (rt/migrate-all conn {} migrations))))
 
 (defroutes public-routes
   (POST "/register" req

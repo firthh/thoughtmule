@@ -4,29 +4,29 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :source-paths ["src/clj" "src/cljs"]
+  :source-paths ["src/clj" "src/cljs" "src/cljc"]
 
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.7.0"]
                  [ring-server "0.4.0"]
-                 [cljsjs/react "0.13.1-0"]
-                 [cljs-ajax "0.3.11"]
+                 [cljsjs/react "0.13.3-1"]
+                 [cljs-ajax "0.3.14"]
                  [reagent "0.5.0"]
-                 [reagent-forms "0.5.0"]
-                 [reagent-utils "0.1.4"]
-                 [org.clojure/clojurescript "0.0-3196" :scope "provided"]
-                 [ring "1.3.2"]
-                 [ring/ring-defaults "0.1.4"]
+                 [reagent-forms "0.5.5"]
+                 [reagent-utils "0.1.5"]
+                 [org.clojure/clojurescript "1.7.28"]
+                 [ring "1.4.0"]
+                 [ring/ring-defaults "0.1.5"]
                  [org.clojure/data.json "0.2.6"]
-                 [com.fasterxml.jackson.dataformat/jackson-dataformat-cbor "2.4.0"]
-                 [ring/ring-json "0.3.1"]
-                 [buddy "0.5.1"]
+                 [com.fasterxml.jackson.dataformat/jackson-dataformat-cbor "2.6.0"]
+                 [ring/ring-json "0.4.0"]
+                 [buddy "0.6.0"]
                  [com.novemberain/validateur "2.4.2"]
-                 [yesql "0.4.0"]
+                 [yesql "0.4.2"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
-                 [ragtime "0.3.8"]
-                 [prone "0.8.1"]
-                 [compojure "1.3.3"]
-                 [selmer "0.8.2"]
+                 [ragtime "0.5.0"]
+                 [prone "0.8.2"]
+                 [compojure "1.4.0"]
+                 [selmer "0.8.7"]
                  [environ "1.0.0"]
                  [secretary "1.2.3"]]
 
@@ -52,7 +52,7 @@
   {:assets
     {"resources/public/css/site.min.css" "resources/public/css/site.css"}}
 
-  :cljsbuild {:builds {:app {:source-paths ["src/cljs"]
+  :cljsbuild {:builds {:app {:source-paths ["src/cljs" "src/cljc"]
                              :compiler {:output-to     "resources/public/js/app.js"
                                         :output-dir    "resources/public/js/out"
                                         :asset-path   "js/out"
@@ -63,14 +63,14 @@
                                   :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
                    :dependencies [[ring-mock "0.1.5"]
-                                  [ring/ring-devel "1.3.2"]
+                                  [ring/ring-devel "1.4.0"]
                                   [leiningen "2.5.1"]
-                                  [figwheel "0.2.6"]
-                                  [weasel "0.6.0"]
-                                  [com.cemerick/piggieback "0.2.0"]
+                                  [figwheel "0.3.7"]
+                                  [weasel "0.7.0"]
+                                  [com.cemerick/piggieback "0.2.1"]
                                   [org.clojure/tools.nrepl "0.2.10"]
                                   [pjstadig/humane-test-output "0.7.0"]
-                                  [midje "1.6.3"]]
+                                  [midje "1.7.0"]]
 
                    :source-paths ["env/dev/clj"]
                    :plugins [[lein-figwheel "0.2.5"]]
