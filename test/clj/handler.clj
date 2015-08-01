@@ -3,7 +3,6 @@
   (:require [travelmule.handler :refer :all]
             [travelmule.db :as db]
             [ring.mock.request :as mock]
-            [ragtime.sql.files :as files]
             [ragtime.core :as rt]
             [clojure.java.jdbc :as jdbc]
             [yesql.core :refer [defqueries]]))
