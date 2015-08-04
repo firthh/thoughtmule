@@ -7,7 +7,8 @@
             [cljsjs.react :as react]
             [ajax.core :refer [GET POST]]
             [travelmule.views.home :as home]
-            [travelmule.views.register :as register])
+            [travelmule.views.register :as register]
+            [travelmule.views.requests.all :as all-requests])
   (:import goog.History))
 
 ;; -------------------------
@@ -30,6 +31,9 @@
 
 (secretary/defroute "/register" []
   (session/put! :current-page #'register/register-page))
+
+(secretary/defroute "/reqests" []
+  (session/put! :current-page #'all-requests/view-all))
 
 ;; -------------------------
 ;; History

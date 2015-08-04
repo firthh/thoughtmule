@@ -7,7 +7,7 @@
             [cljsjs.react :as react]
             [ajax.core :refer [GET POST]]
             [travelmule.views.common :as c]
-            [validations.users :refer :all]))
+            [validations.users :as v]))
 
 (def error (atom ""))
 
@@ -28,7 +28,7 @@
    :confirm-password confirm-password})
 
 (defn send-request [user]
-  (if (valid-user? user)
+  (if (v/valid-user? user)
     (POST "/register" {:params user
                        :response-format :json
                        :format :json
@@ -40,22 +40,17 @@
   (if errors
     [:div {:class "error"} (map (fn [e] [:span e ", "]) errors)]))
 
-(defn atom-input [value key type]
-  [:input {:type type
-           :value (key @value)
-           :on-change #(swap! value assoc key (.-target.value %))}])
-
 (defn register-form []
   (let [form (atom {})
         validation-errors (atom {})]
     (fn []
       (add-watch form :validation (fn [key at old new] (reset! validation-errors (User new))))
       [:div {:id "regiseter-form"}
-       [:div [:label "Email address"] [atom-input form :email "text"]]
+       [:div [:label "Email address"] [atom-input :email form "text"]]
        [error-message (:email @validation-errors)]
-       [:div [:label "Password"] [atom-input form :password "password"]]
+       [:div [:label "Password"] [atom-input :password form "password"]]
        [error-message (:password @validation-errors)]
-       [:div [:label "Confirm Password"] [atom-input form :confirm-password "password"]]
+       [:div [:label "Confirm Password"] [atom-input :confirm-password form "password"]]
        [error-message (:confirm-password @validation-errors)]
        [:input {:type "button" :value "Register"
                 :on-click #(send-request @form)}]])))

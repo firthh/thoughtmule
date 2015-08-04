@@ -1,7 +1,7 @@
 (ns validations.users
   (:require
-   #?(:cljs [validateur.validation :refer :all :include-macros true]
-      :clj  [validateur.validation :refer :all])))
+   #?(:cljs [validateur.validation :as v :include-macros true]
+      :clj  [validateur.validation :as v])))
 
 (defn- attributes-equal
   [attribute1 attribute2]
@@ -21,15 +21,15 @@
         [(nil? result) result]))))
 
 (def user-validation
-  (validation-set
-   (format-of :email
+  (v/validation-set
+   (v/format-of :email
               :format #"^.*@thoughtworks.com$"
               :message "Must be a valid email address")
-   (length-of :password :within (range 6 100))
-   (presence-of :confirm-password)
+   (v/length-of :password :within (range 6 100))
+   (v/presence-of :confirm-password)
    (equal :password :confirm-password)))
 
 (defn invalid-user? [user]
-  (valid? user-validation user))
+  (v/valid? user-validation user))
 
 (def valid-user? (complement invalid-user?))
